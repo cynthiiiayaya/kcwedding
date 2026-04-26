@@ -129,7 +129,7 @@
       position: relative;
       width: 100%;
       height: 100svh;
-      min-height: 640px;
+      min-height: 820px;
       overflow: hidden;
     }
 
@@ -161,9 +161,9 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      /* top pad ≈ 95/874 = 10.87svh, bottom pad ≈ 101/874 = 11.56svh */
-      padding: clamp(72px, 10.87svh, 120px) 28px clamp(80px, 11.56svh, 130px);
+      justify-content: flex-start;
+      gap: clamp(280px, 57svh, 520px);
+      padding: clamp(72px, 10.87svh, 120px) 28px clamp(64px, 10svh, 120px);
     }
 
     .cover__tagline {
@@ -238,24 +238,11 @@
       letter-spacing: -0.03em;
       cursor: pointer;
       transition: background 0.22s, color 0.22s;
+      margin-top: 12px;
     }
 
     .cover__rsvp-btn:hover { background: var(--teal); color: var(--white); }
 
-    .cover__arrow {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      z-index: 2;
-      opacity: 0.6;
-      display: block;
-      animation: arrowBounce 2.2s ease-in-out infinite;
-    }
-
-    @keyframes arrowBounce {
-      0%, 100% { transform: translateX(-50%) translateY(0); }
-      50%       { transform: translateX(-50%) translateY(7px); }
-    }
 
     /* ─── SHARED SECTION STYLES ──────────────────────────── */
     .section {
@@ -309,9 +296,6 @@
     .story__bg {
       background-image: url('landing%20photo_mobile.jpg');
       background-position: center top;
-      /* extend beyond section so JS scroll compensation never exposes a gap */
-      top: -80px;
-      bottom: -80px;
     }
 
     .story__overlay {
@@ -369,6 +353,7 @@
 
     .story__2027 {
       text-align: center;
+      margin-top: 48px;
       opacity: 0;
       transform: translateY(32px);
       transition: opacity 1.1s cubic-bezier(0.22, 1, 0.36, 1),
@@ -438,9 +423,14 @@
     #schedule {
       background: radial-gradient(ellipse 85% 60% at 50% 50%, #fff8f2 0%, #ffefe1 70%);
       min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .schedule__bg { display: none; }
+
+    .schedule__inner { padding: 40px 28px; }
 
     .schedule__photo-panel { display: none; }
 
@@ -485,11 +475,12 @@
 
     .schedule__note {
       font-family: var(--font-b);
-      font-style: italic;
-      font-size: 12px;
-      color: var(--teal);
-      opacity: 0.55;
-      letter-spacing: -0.01em;
+      font-weight: 400;
+      font-size: 13px;
+      color: rgba(4, 70, 94, 0.7);
+      text-align: left;
+      letter-spacing: -0.03em;
+      line-height: 1.5;
       margin-top: 18px;
     }
 
@@ -627,8 +618,19 @@
       text-align: center;
       letter-spacing: -0.03em;
       line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    .rsvp__ornament {
+      text-align: center;
+      color: rgba(4, 70, 94, 0.5);
+      letter-spacing: 0.1em;
       margin-bottom: 26px;
     }
+
+    .rsvp__ornament span:nth-child(1) { font-size: 16px; }
+    .rsvp__ornament span:nth-child(2) { font-size: 20px; }
+    .rsvp__ornament span:nth-child(3) { font-size: 16px; }
 
     .rsvp__form { display: flex; flex-direction: column; gap: 34px; }
 
@@ -837,20 +839,20 @@
       justify-content: center;
       width: 200px;
       padding: 10px 20px;
-      background: var(--white);
+      background: var(--teal);
       border: none;
       border-radius: 50px;
       font-family: var(--font-b);
       font-weight: 500;
       font-size: 20px;
-      color: var(--teal);
+      color: var(--white);
       letter-spacing: -0.03em;
       cursor: pointer;
       margin: 18px auto 0;
       transition: background 0.22s, color 0.22s;
     }
 
-    .rsvp__submit-btn:hover { background: var(--teal); color: var(--white); }
+    .rsvp__submit-btn:hover { background: var(--white); color: var(--teal); }
 
     /* Success */
     .rsvp__success {
@@ -884,7 +886,7 @@
     #venue { background: var(--teal); min-height: 100svh; }
 
     .venue__bg {
-      background-image: url('kenting.png');
+      background-image: url('whyvenue.jpg');
       background-position: center top;
     }
 
@@ -1014,6 +1016,13 @@
 
     .kenting__cat-content ul { list-style: none; padding: 0; }
 
+    .kenting__cat-content a {
+      color: inherit;
+      font-weight: 500;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
     .kenting__cat-content li {
       padding: 8px 0;
       border-bottom: 1px solid rgba(4, 70, 94, 0.07);
@@ -1108,6 +1117,7 @@
         transform: translateX(-50%);
         align-items: center;
         justify-content: flex-start;
+        gap: 0;
         padding: clamp(220px, 31.25svh, 340px) 0 180px 0;
       }
 
@@ -1120,6 +1130,7 @@
       }
 
       .cover__info { gap: 0; width: auto; }
+      .cover__rsvp-btn { margin-top: 0; }
 
       /* names centre=480.5px; date top=561px → gap≈33px after names height */
       .cover__names {
@@ -1144,14 +1155,11 @@
         margin-bottom: 24px;
       }
 
-      /* ── Schedule: centered, no photo panel ── */
-      #schedule { display: block; }
-
+      /* ── Schedule: vertically centered, no photo panel ── */
       .schedule__inner {
         width: auto;
         max-width: 520px;
-        display: block;
-        padding: 100px 48px 88px;
+        padding: 40px 48px;
         height: auto;
       }
 
@@ -1259,12 +1267,6 @@
       </div>
     </div>
 
-    <a href="#story" class="cover__arrow" aria-label="Scroll to Our Story">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <line x1="12" y1="4" x2="12" y2="20" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
-        <polyline points="6,14 12,20 18,14" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </a>
   </section>
 
   <!-- ═══ OUR STORY ════════════════════════════════════════ -->
@@ -1395,6 +1397,10 @@
 
       <p class="rsvp__note">Red packets are not expected.<br>Your presence on this special day is more than enough.</p>
 
+      <p class="rsvp__ornament">
+        <span>❀</span><span>❀</span><span>❀</span>
+      </p>
+
       <form class="rsvp__form" id="rsvpForm" novalidate>
 
         <!-- Name + bring others + guest names -->
@@ -1492,19 +1498,22 @@
 
       <div class="venue__text">
         <p>
-          2 years ago, Cynthia and Kelvin were thinking about what kind of wedding they wanted. Cynthia loves beaches, islands and sunsets — not on the beach because of the sand, but overlooking the sea. Kelvin likes a simple and cozy atmosphere. Both of them want a small and genuine wedding that they truly enjoyed. Not too expensive either.
+          Two years ago, we started talking about what kind of wedding we wanted.
+          Cynthia has always loved the sea. Sunsets, island vibes, but not too close to the sand. Kelvin prefers something simple and cozy. And for both of us, we knew we wanted something small, genuine, and actually enjoyable.
         </p>
         <p>
-          Initially, they planned to have it at Bali. But after doing research, they realized Bali can be as expensive as Singapore, and they don't have any memorable connection with Bali as well. Cynthia thought, "what if it's Kenting?" It's a place that both of them love, and in Taiwan — Cynthia's home country.
+          At first, we thought about Bali. But after looking into it, it didn't quite feel right. It was almost as expensive as Singapore, and we didn't really have any special connection to it.
         </p>
         <p>
-          They found someone who posted about a beach wedding that's exactly like what they had in mind: sea view, sunset view, grassland, romantic, simple. Immediately they knew that this is the place.
+          "What about Kenting?" We thought one day. It's a place we both love.
+          When we found this venue through a blog post, overlooking the sea, with sunset views and an open space, quiet and private — it felt very "us".
         </p>
         <p>
-          After really visiting and staying for a night this April, they were healed by the sea, the sunset and sunrise, the stars, the cute sausage dogs — just lazing at the balcony and forgetting all their worries. They knew immediately that this is the place they want to invite their family and friends to celebrate their wedding: simple, peaceful, romantic, and cozy.
+          We visited this April and stayed for a night. We spent most of the time just sitting on the balcony, looking out at the sea, watching the sunset and sunrise, doing nothing much. There were also a few very cute sausage dogs around. It felt calm, easy, and really nice.
+          That's when we knew: this is the place we want to celebrate with the people we love.
         </p>
         <p>
-          They want to share the same kind of therapeutic feeling with you.
+          Simple, peaceful, and therapeutic — we hope you'll feel a little of that magic with us.
         </p>
       </div>
     </div>
@@ -1520,7 +1529,7 @@
       <div class="section__rule rule-white"></div>
 
       <p class="kenting__subtitle">
-        We can't wait to share what's at Kenting and why we love it so much — here is a curated list of things that we love.
+        We can't wait to share what's at Kenting and why we love it so much ✨ here is a curated list of things that we love.
       </p>
 
       <div class="kenting__card">
@@ -1534,9 +1543,12 @@
           <div class="kenting__cat-body">
             <div class="kenting__cat-content">
               <ul>
-                <li>Local seafood night market along Kenting Street</li>
-                <li>Fresh tropical fruit stands along the main road</li>
-                <li>Taiwanese breakfast spots near the town centre</li>
+                <li><span><a href="https://maps.app.goo.gl/5sbdc4W8Du6myct77" target="_blank" rel="noopener">Piccolo Bistro 迷路小章魚 </a> — Creative Italian-Asian fusion with relaxed beachfront outdoor seating. Love their squid risotto!</span></li>
+                <li><span><a href="https://maps.app.goo.gl/BCTE5kfhBJRLrszF6" target="_blank" rel="noopener">Village South Sea Cuisine 庄仔内灶脚</a> — Thai food tucked in an alley, almost every dish we've tried are delicious.</span></li>
+                <li><span><a href="https://maps.app.goo.gl/jiQwS1zy12ArHDGG7" target="_blank" rel="noopener">Vietnamese Restaurant 山海阿娟小吃</a> — A simple, local eateries with good fried noodle and egg drop soup.</span></li>
+                <li><span><a href="https://maps.app.goo.gl/CtvJTyZqFR64aESY6" target="_blank" rel="noopener">Zeng's 曾家小棧</a> — Local Taiwanese style restaurant, known for their crispy skin chicken.</span></li>
+                <li><span><a href="https://maps.app.goo.gl/jcKmiT6RjYmv5rYz9" target="_blank" rel="noopener">Tianzhong Seafood 田中漁夫</a> — Super fresh sashimi and seafood straight from the beach.</span></li>
+                <li><span><a href="https://maps.app.goo.gl/3jMNYBPA4sYXymze9" target="_blank" rel="noopener">Kenting Night Market 墾丁大街</a> — The iconic street food strip!</span></li>
               </ul>
             </div>
           </div>
@@ -1552,9 +1564,9 @@
           <div class="kenting__cat-body">
             <div class="kenting__cat-content">
               <ul>
-                <li>Seaside cafes with ocean views — perfect for morning coffee</li>
-                <li>Specialty coffee roasters in the town area</li>
-                <li>Beachside smoothie bars for the afternoon</li>
+                <li><span><a href="https://maps.app.goo.gl/y7mEMzbbNPX6BGgM9" target="_blank" rel="noopener">Sannan Cafe 山男咖啡</a> — Oceanfront café right next to the venue, overlooking the village.</span></li>
+                <li><span><a href="https://maps.app.goo.gl/No167qQyevAm818HA" target="_blank" rel="noopener">Addicted to Café 嗜。咖啡</a> — Specialty coffee spot in the heart of Kenting town.</span></li>
+                <li><span><a href="https://maps.app.goo.gl/bioisCiJbbTDTTah7" target="_blank" rel="noopener">Wan Cafe 灣咖啡</a> — Laid-back seaside café by the beach, great for catching sunset.</span></li>
               </ul>
             </div>
           </div>
@@ -1570,9 +1582,8 @@
           <div class="kenting__cat-body">
             <div class="kenting__cat-content">
               <ul>
-                <li>Sunset cocktail bars along the clifftop</li>
-                <li>Casual beach bars with live music on weekends</li>
-                <li>Night market drink stalls for local soju and beer</li>
+                <li><span><a href="https://maps.app.goo.gl/McgxcCZfe4HbpvsT9" target="_blank" rel="noopener">New Cut Warehouse 鈕扣倉庫</a> — Quirky camping-style bar.</span></li>
+                <li><span><a href="https://maps.app.goo.gl/1pRvR7BV3Ub7NrTr5" target="_blank" rel="noopener">ToP Bar 簡單．夜景餐酒館</a> — Rooftop bar.</span></li>
               </ul>
             </div>
           </div>
@@ -1588,10 +1599,10 @@
           <div class="kenting__cat-body">
             <div class="kenting__cat-content">
               <ul>
-                <li>Kenting National Park — Taiwan's only tropical national park</li>
-                <li>Eluanbi Lighthouse and the southernmost tip of Taiwan</li>
-                <li>Snorkelling and clear waters at Xiaowan Beach</li>
-                <li>Stargazing — remarkably little light pollution at night</li>
+                <li><span><a href="https://maps.app.goo.gl/5LuX2MfncBkvobxV8" target="_blank" rel="noopener">Longpan Park 龍磐公園</a> — Dramatic clifftop park with beautiful ocean panoramas.</span></li>
+                <li><span><a href="https://maps.app.goo.gl/4WWCevcv3Ls6TvUG8" target="_blank" rel="noopener">Star Beach 星砂灣</a> — A once-secret cove with crystal-clear, shallow water.</span></li>
+                <li><span><a href="https://maps.app.goo.gl/kZe8fLS5oFfpbap27" target="_blank" rel="noopener">Wanlitong 萬里桐</a> — Top snorkelling spot, look out for Nemo, corals, and (if you are lucky) sea turtles.</span></li>
+                <li><span><a href="https://maps.app.goo.gl/gnUELgGcCVaC8eke8" target="_blank" rel="noopener">Eluanbi Lighthouse 鵝鑾鼻燈塔</a> — Taiwan's southernmost tip, also great for stargazing at night.</span></li>
               </ul>
             </div>
           </div>
@@ -1645,20 +1656,31 @@
       ).observe(intro);
     }());
 
-    /* ── Our Story: simulate fixed bg on mobile (iOS Safari workaround) ── */
+    /* ── Cover + Story: one continuous fixed bg on mobile (iOS Safari workaround) ── */
     (function () {
-      const story = document.getElementById('story');
-      if (!story) return;
-      const bg = story.querySelector('.story__bg');
-      if (!bg) return;
-      var elementPageTop = story.getBoundingClientRect().top + window.scrollY;
+      const coverBg  = document.querySelector('.cover__bg');
+      const storyEl  = document.getElementById('story');
+      const storyBg  = storyEl ? storyEl.querySelector('.story__bg') : null;
+
+      var storyPageTop = storyEl
+        ? storyEl.getBoundingClientRect().top + window.scrollY
+        : 0;
+
       function tick() {
-        if (window.innerWidth >= 768) { bg.style.backgroundPositionY = ''; return; }
-        bg.style.backgroundPositionY = (window.scrollY - elementPageTop) + 'px';
+        if (window.innerWidth >= 768) {
+          if (coverBg) coverBg.style.backgroundPositionY = '';
+          if (storyBg) storyBg.style.backgroundPositionY = '';
+          return;
+        }
+        var sy = window.scrollY;
+        /* backgroundPositionY = scrollY - divPageTop keeps the image viewport-fixed */
+        if (coverBg) coverBg.style.backgroundPositionY = sy + 'px';
+        if (storyBg) storyBg.style.backgroundPositionY = (sy - storyPageTop) + 'px';
       }
+
       window.addEventListener('scroll', tick, { passive: true });
       window.addEventListener('resize', function () {
-        elementPageTop = story.getBoundingClientRect().top + window.scrollY;
+        if (storyEl) storyPageTop = storyEl.getBoundingClientRect().top + window.scrollY;
         tick();
       }, { passive: true });
       tick();
