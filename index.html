@@ -133,13 +133,21 @@
       overflow: hidden;
     }
 
-    .cover__bg {
-      position: absolute;
+    /* ─── MOBILE FIXED PHOTO LAYER (iOS Safari) ─────────── */
+    .fixed-photo-bg {
+      position: fixed;
       inset: 0;
+      z-index: -1;
       background-image: url('landing%20photo_mobile.jpg');
       background-size: cover;
       background-position: center top;
-      will-change: background-position;
+      pointer-events: none;
+      transform: translateZ(0);
+    }
+
+    .cover__bg {
+      position: absolute;
+      inset: 0;
     }
 
     .cover__overlay {
@@ -292,12 +300,10 @@
     .rule-teal  { background: var(--teal); }
 
     /* ─── OUR STORY ──────────────────────────────────────── */
-    #story { background: var(--teal-dark); min-height: 100svh; }
+    #story { background: transparent; min-height: 100svh; }
 
     .story__bg {
-      background-image: url('landing%20photo_mobile.jpg');
       background-position: center top;
-      will-change: background-position;
     }
 
     .story__overlay {
@@ -580,7 +586,10 @@
 
     /* ─── RSVP ───────────────────────────────────────────── */
     #rsvp {
-      background: radial-gradient(ellipse 85% 50% at 10% 10%, #ffffff 0%, #d6edf6 70%);
+      background:
+        radial-gradient(ellipse 85% 50% at 10% 10%, #ffffff 0%, transparent 70%),
+        radial-gradient(ellipse 70% 45% at 90% 95%, #ffffff 0%, transparent 70%),
+        #d6edf6;
       min-height: 100svh;
     }
 
@@ -1099,13 +1108,18 @@
         height: calc(100svh + 160px);
       }
 
+      .fixed-photo-bg { display: none; }
+
       .cover__bg {
         background-image: url('landing%20photo_desktop.jpg');
+        background-size: cover;
         background-position: center 65%;
         background-attachment: fixed;
       }
 
       /* ── Story: same fixed photo continues from cover ── */
+      #story { background: var(--teal-dark); }
+
       .story__bg {
         background-image: url('landing%20photo_desktop.jpg');
         background-position: center 65%;
@@ -1250,6 +1264,8 @@
   </style>
 </head>
 <body>
+
+  <div class="fixed-photo-bg" aria-hidden="true"></div>
 
   <!-- ═══ NAVIGATION ════════════════════════════════════════ -->
   <nav class="nav" id="nav">
@@ -1682,43 +1698,6 @@
       ).observe(intro);
     }());
 
-    /* ── Cover + Story: one continuous fixed bg on mobile (iOS Safari workaround) ── */
-    (function () {
-      const coverBg  = document.querySelector('.cover__bg');
-      const storyEl  = document.getElementById('story');
-      const storyBg  = storyEl ? storyEl.querySelector('.story__bg') : null;
-
-      var storyPageTop = storyEl
-        ? storyEl.getBoundingClientRect().top + window.scrollY
-        : 0;
-      var rafPending = false;
-
-      function tick() {
-        rafPending = false;
-        if (window.innerWidth >= 768) {
-          if (coverBg) coverBg.style.backgroundPositionY = '';
-          if (storyBg) storyBg.style.backgroundPositionY = '';
-          return;
-        }
-        var sy = Math.max(0, window.scrollY);
-        if (coverBg) coverBg.style.backgroundPositionY = sy + 'px';
-        if (storyBg) storyBg.style.backgroundPositionY = (sy - storyPageTop) + 'px';
-      }
-
-      function onScroll() {
-        if (!rafPending) {
-          rafPending = true;
-          requestAnimationFrame(tick);
-        }
-      }
-
-      window.addEventListener('scroll', onScroll, { passive: true });
-      window.addEventListener('resize', function () {
-        if (storyEl) storyPageTop = storyEl.getBoundingClientRect().top + window.scrollY;
-        onScroll();
-      }, { passive: true });
-      tick();
-    }());
 
     /* ── Getting Here: overlay + content reveal ──────────────── */
     (function () {
