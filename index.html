@@ -1794,13 +1794,7 @@
     const burger  = document.getElementById('navBurger');
     const navMenu = document.getElementById('navMenu');
 
-    let menuSavedScroll = 0;
-
     function openMenu() {
-      menuSavedScroll = window.scrollY;
-      document.body.style.position = 'fixed';
-      document.body.style.width = '100%';
-      document.body.style.top = `-${menuSavedScroll}px`;
       navMenu.classList.add('open');
       burger.classList.add('open');
       burger.setAttribute('aria-expanded', 'true');
@@ -1810,10 +1804,6 @@
       navMenu.classList.remove('open');
       burger.classList.remove('open');
       burger.setAttribute('aria-expanded', 'false');
-      document.body.style.position = '';
-      document.body.style.width = '';
-      document.body.style.top = '';
-      window.scrollTo(0, menuSavedScroll);
     }
 
     burger.addEventListener('click', () => {
