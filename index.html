@@ -105,11 +105,17 @@
       justify-content: center;
       gap: 40px;
       opacity: 0;
+      visibility: hidden;
       pointer-events: none;
-      transition: opacity 0.3s ease;
+      transition: opacity 0.3s ease, visibility 0s linear 0.3s;
     }
 
-    .nav__menu.open { opacity: 1; pointer-events: all; }
+    .nav__menu.open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: all;
+      transition: opacity 0.3s ease, visibility 0s linear 0s;
+    }
 
     .nav__menu a {
       font-family: var(--font-d);
@@ -427,12 +433,13 @@
       min-height: 100svh;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
+      justify-content: center;
+      padding: 80px 28px 72px;
     }
 
     .schedule__bg { display: none; }
 
-    .schedule__inner { padding: 80px 28px 72px; }
+    .schedule__inner { padding: 0; }
 
     .schedule__photo-panel { display: none; }
 
@@ -1173,7 +1180,7 @@
       }
 
       /* ── Schedule: vertically centered, no photo panel ── */
-      #schedule { justify-content: center; }
+      #schedule { padding: 0; }
 
       .schedule__inner {
         width: auto;
@@ -1787,20 +1794,34 @@
     const burger  = document.getElementById('navBurger');
     const navMenu = document.getElementById('navMenu');
 
+    let menuSavedScroll = 0;
+
+    function openMenu() {
+      menuSavedScroll = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+      document.body.style.top = `-${menuSavedScroll}px`;
+      navMenu.classList.add('open');
+      burger.classList.add('open');
+      burger.setAttribute('aria-expanded', 'true');
+    }
+
+    function closeMenu() {
+      navMenu.classList.remove('open');
+      burger.classList.remove('open');
+      burger.setAttribute('aria-expanded', 'false');
+      document.body.style.position = '';
+      document.body.style.width = '';
+      document.body.style.top = '';
+      window.scrollTo(0, menuSavedScroll);
+    }
+
     burger.addEventListener('click', () => {
-      const open = navMenu.classList.toggle('open');
-      burger.classList.toggle('open', open);
-      burger.setAttribute('aria-expanded', open);
-      document.body.style.overflow = open ? 'hidden' : '';
+      navMenu.classList.contains('open') ? closeMenu() : openMenu();
     });
 
     navMenu.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        navMenu.classList.remove('open');
-        burger.classList.remove('open');
-        burger.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
-      });
+      link.addEventListener('click', closeMenu);
     });
 
     /* ── RSVP: show/hide guest list ── */
@@ -1901,4 +1922,8 @@
     });
   </script>
 </body>
+</html>
+ody>
+</html>
+ody>
 </html>
