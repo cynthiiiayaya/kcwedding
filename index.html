@@ -427,12 +427,12 @@
       min-height: 100svh;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
     }
 
     .schedule__bg { display: none; }
 
-    .schedule__inner { padding: 40px 28px; }
+    .schedule__inner { padding: 80px 28px 72px; }
 
     .schedule__photo-panel { display: none; }
 
@@ -1173,6 +1173,8 @@
       }
 
       /* ── Schedule: vertically centered, no photo panel ── */
+      #schedule { justify-content: center; }
+
       .schedule__inner {
         width: auto;
         max-width: 520px;
