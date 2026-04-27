@@ -14,7 +14,7 @@
     :root {
       --teal:       #04465e;
       --teal-dark:  #1a3641;
-      --bg-blue:    #d6edf6;
+      --bg-blue:    #ffefe1;
       --bg-cream:   #fffaf5;
       --white:      #ffffff;
       --off-white:  #f6f6f6;
@@ -618,14 +618,29 @@
       text-align: center;
       letter-spacing: -0.03em;
       line-height: 1.5;
-      margin-bottom: 12px;
+      margin: 0;
+    }
+
+    .rsvp__closing {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
     }
 
     .rsvp__ornament {
       text-align: center;
       color: rgba(4, 70, 94, 0.5);
       letter-spacing: 0.1em;
-      margin-bottom: 26px;
+      margin: 0 0 34px;
+    }
+
+    .rsvp__closing .rsvp__ornament {
+      margin: 0;
+    }
+
+    .rsvp__inner > .rsvp__note {
+      margin-bottom: 12px;
     }
 
     .rsvp__ornament span:nth-child(1) { font-size: 16px; }
@@ -1173,7 +1188,7 @@
         padding: 100px 56px 88px;
       }
 
-      .rsvp__note { margin-bottom: 12px; }
+      .rsvp__note { margin: 0; }
 
       .rsvp__checkboxes {
         display: grid;
@@ -1395,7 +1410,8 @@
       <h2 class="rsvp__heading">RSVP</h2>
       <div class="rsvp__rule"></div>
 
-      <p class="rsvp__note">Red packets are not expected.<br>Your presence on this special day is more than enough.</p>
+
+      <p class="rsvp__note">We kindly ask that you RSVP by 24 October 2026<br>so we can make the necessary arrangements.</p>
 
       <p class="rsvp__ornament">
         <span>❀</span><span>❀</span><span>❀</span>
@@ -1475,6 +1491,11 @@
               <span>None</span>
             </label>
           </div>
+        </div>
+
+        <div class="rsvp__closing">
+          <p class="rsvp__ornament"><span>❀</span><span>❀</span><span>❀</span></p>
+          <p class="rsvp__note">Red packets are not expected.<br>Your presence on this special day is more than enough.</p>
         </div>
 
         <button type="submit" class="rsvp__submit-btn">Submit</button>
