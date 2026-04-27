@@ -14,7 +14,7 @@
     :root {
       --teal:       #04465e;
       --teal-dark:  #1a3641;
-      --bg-blue:    #ffefe1;
+      --bg-blue:    #FFFAF5;
       --bg-cream:   #fffaf5;
       --white:      #ffffff;
       --off-white:  #f6f6f6;
@@ -139,6 +139,7 @@
       background-image: url('landing%20photo_mobile.jpg');
       background-size: cover;
       background-position: center top;
+      will-change: background-position;
     }
 
     .cover__overlay {
@@ -296,6 +297,7 @@
     .story__bg {
       background-image: url('landing%20photo_mobile.jpg');
       background-position: center top;
+      will-change: background-position;
     }
 
     .story__overlay {
@@ -1686,23 +1688,31 @@
       var storyPageTop = storyEl
         ? storyEl.getBoundingClientRect().top + window.scrollY
         : 0;
+      var rafPending = false;
 
       function tick() {
+        rafPending = false;
         if (window.innerWidth >= 768) {
           if (coverBg) coverBg.style.backgroundPositionY = '';
           if (storyBg) storyBg.style.backgroundPositionY = '';
           return;
         }
-        var sy = window.scrollY;
-        /* backgroundPositionY = scrollY - divPageTop keeps the image viewport-fixed */
+        var sy = Math.max(0, window.scrollY);
         if (coverBg) coverBg.style.backgroundPositionY = sy + 'px';
         if (storyBg) storyBg.style.backgroundPositionY = (sy - storyPageTop) + 'px';
       }
 
-      window.addEventListener('scroll', tick, { passive: true });
+      function onScroll() {
+        if (!rafPending) {
+          rafPending = true;
+          requestAnimationFrame(tick);
+        }
+      }
+
+      window.addEventListener('scroll', onScroll, { passive: true });
       window.addEventListener('resize', function () {
         if (storyEl) storyPageTop = storyEl.getBoundingClientRect().top + window.scrollY;
-        tick();
+        onScroll();
       }, { passive: true });
       tick();
     }());
