@@ -99,22 +99,19 @@
       inset: 0;
       background: var(--teal);
       z-index: 199;
-      display: flex;
+      display: none;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 40px;
       opacity: 0;
-      visibility: hidden;
       pointer-events: none;
-      transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+      transition: opacity 0.3s ease;
     }
 
     .nav__menu.open {
       opacity: 1;
-      visibility: visible;
       pointer-events: all;
-      transition: opacity 0.3s ease, visibility 0s linear 0s;
     }
 
     .nav__menu a {
@@ -1795,6 +1792,8 @@
     const navMenu = document.getElementById('navMenu');
 
     function openMenu() {
+      navMenu.style.display = 'flex';
+      navMenu.getBoundingClientRect(); // force reflow before transition starts
       navMenu.classList.add('open');
       burger.classList.add('open');
       burger.setAttribute('aria-expanded', 'true');
@@ -1805,6 +1804,12 @@
       burger.classList.remove('open');
       burger.setAttribute('aria-expanded', 'false');
     }
+
+    navMenu.addEventListener('transitionend', (e) => {
+      if (e.propertyName === 'opacity' && !navMenu.classList.contains('open')) {
+        navMenu.style.display = 'none';
+      }
+    });
 
     burger.addEventListener('click', () => {
       navMenu.classList.contains('open') ? closeMenu() : openMenu();
@@ -1912,8 +1917,4 @@
     });
   </script>
 </body>
-</html>
-ody>
-</html>
-ody>
 </html>
