@@ -1854,21 +1854,25 @@
         if (!res.ok) throw new Error(await res.text());
 
 // Google Sheets backup via Apps Script
-await fetch('https://script.google.com/macros/s/AKfycbxodvMo2tvMWWnlrVPeC16azUvYpDBBACx7QKwWJmbkFPlr5bkUah4jZegV_SudDdwahg/exec', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    name:        document.getElementById('fullName').value.trim(),
-    email:       document.getElementById('rsvpEmail').value.trim(),
-    phone:       document.getElementById('rsvpPhone').value.trim() || null,
-    flying_from: document.getElementById('rsvpOrigin').value.trim() || null,
-    guests:      guests.length ? guests : null,
-    dietary:     dietary.length ? dietary : null,
-    submitted_at: new Date().toISOString(),
-  }),
-});
+try {
+  await fetch('https://script.google.com/macros/s/AKfycbxodvMo2tvMWWnlrVPeC16azUvYpDBBACx7QKwWJmbkFPlr5bkUah4jZegV_SudDdwahg/exec', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'text/plain;charset=utf-8',
+    },
+    body: JSON.stringify({
+      name:        document.getElementById('fullName').value.trim(),
+      email:       document.getElementById('rsvpEmail').value.trim(),
+      phone:       document.getElementById('rsvpPhone').value.trim() || null,
+      flying_from: document.getElementById('rsvpOrigin').value.trim() || null,
+      guests:      guests.length ? guests : null,
+      dietary:     dietary.length ? dietary : null,
+      submitted_at: new Date().toISOString(),
+    }),
+  });
+} catch (backupErr) {
+  console.warn('Google Sheets backup failed:', backupErr);
+}
 
         e.target.style.display = 'none';
         document.getElementById('rsvpSuccess').classList.add('show');
