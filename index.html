@@ -1853,8 +1853,8 @@
 
         if (!res.ok) throw new Error(await res.text());
 
-// Google Sheets backup via Make webhook
-await fetch('https://hook.eu1.make.com/rkzosbtzsj1uzpahvngwtswwe9w7zpv9', {
+// Google Sheets backup via Apps Script
+await fetch('https://script.google.com/macros/s/AKfycbxodvMo2tvMWWnlrVPeC16azUvYpDBBACx7QKwWJmbkFPlr5bkUah4jZegV_SudDdwahg/exec', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
