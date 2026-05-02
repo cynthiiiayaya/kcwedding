@@ -1535,7 +1535,8 @@
 
       <!-- Success state -->
       <div class="rsvp__success" id="rsvpSuccess">
-        <p class="rsvp__success-title">We look forward to seeing you!</p>
+        <p class="rsvp__success-title">Thank you. We look forward to seeing you!</p>
+        <p class="rsvp__success-text">Further details will be sent closer to the date.</p>
       </div>
     </div>
   </section>
@@ -1853,7 +1854,7 @@
 
 // Google Sheets backup via Apps Script
 try {
-  await fetch('https://script.google.com/macros/s/AKfycbxodvMo2tvMWWnlrVPeC16azUvYpDBBACx7QKwWJmbkFPlr5bkUah4jZegV_SudDdwahg/exec', {
+  fetch('https://script.google.com/macros/s/AKfycbxodvMo2tvMWWnlrVPeC16azUvYpDBBACx7QKwWJmbkFPlr5bkUah4jZegV_SudDdwahg/exec', {
     method: 'POST',
     headers: {
       'Content-Type': 'text/plain;charset=utf-8',
