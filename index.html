@@ -952,7 +952,7 @@
     #kenting { background: var(--bg-blue); min-height: 100svh; }
 
     .kenting__bg {
-      background-image: url('schedule.png');
+      background-image: url('kenting.jpg');
       background-position: center;
     }
 
@@ -1515,7 +1515,7 @@
               <span>Nut allergy</span>
             </label>
             <label class="rsvp__diet-row">
-              <input class="rsvp__checkbox" type="checkbox" name="dietary" value="others">
+              <input class="rsvp__checkbox" type="checkbox" name="dietary" value="others" id="dietOthers">
               <span>Others</span>
             </label>
             <label class="rsvp__diet-row">
@@ -1523,6 +1523,18 @@
               <span>None</span>
             </label>
           </div>
+          <div class="rsvp__guests-wrap" id="dietOthersWrap">
+            <div class="rsvp__guests-card">
+              <div class="rsvp__guests">
+                <div class="rsvp__guest-row">
+                  <input class="rsvp__guest-input" type="text" id="dietOthersInput"
+                        name="dietary_other" placeholder="Please specify" autocomplete="off">
+                </div>
+              </div>
+            </div>
+          </div>
+
+
         </div>
 
         <div class="rsvp__closing">
@@ -1800,6 +1812,13 @@
       guestsWrap.classList.toggle('open', bringOthers.checked);
     });
 
+    const dietOthers    = document.getElementById('dietOthers');
+    const dietOthersWrap = document.getElementById('dietOthersWrap');
+
+    dietOthers.addEventListener('change', () => {
+      dietOthersWrap.classList.toggle('open', dietOthers.checked);
+    });
+
     /* Add / remove guest rows */
     document.getElementById('addGuestBtn').addEventListener('click', () => {
       const idx = guestList.children.length + 1;
@@ -1847,6 +1866,7 @@
             flying_from: document.getElementById('rsvpOrigin').value.trim() || null,
             guests:      guests.length ? guests : null,
             dietary:     dietary.length ? dietary : null,
+            dietary_other: document.getElementById('dietOthersInput').value.trim() || null,  // newly added
           }),
         });
 
@@ -1866,6 +1886,7 @@ try {
       flying_from: document.getElementById('rsvpOrigin').value.trim() || null,
       guests:      guests.length ? guests : null,
       dietary:     dietary.length ? dietary : null,
+      dietary_other: document.getElementById('dietOthersInput').value.trim() || null,  // newly added
       submitted_at: new Date().toISOString(),
     }),
   });
